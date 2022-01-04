@@ -37,3 +37,4 @@ while n >= 0:
 
 f = open("blocks.json", "w")
 json.dump(blocks, f)
+print("Finished")
