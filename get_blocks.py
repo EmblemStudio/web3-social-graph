@@ -30,7 +30,7 @@ while n >= 0:
       "params": [block_number, True],
       "id": 0
     }
-  ).json()
+  ).json()['result']
   blocks.append(res)
   n -= 1
   block_number = hex(int(block_number, 16) - 1)
