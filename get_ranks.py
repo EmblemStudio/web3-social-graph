@@ -1,5 +1,6 @@
+import requests
 import json
-from operator import itemgetter
+import env
 from graphs import getGraph
 from Web3PageRank import PageRank
 
@@ -24,5 +25,18 @@ sorted_nodes = sorted(node_scores, key=lambda n: node_scores[n][1], reverse=True
 r = open('ranks', 'w')
 ranks = ''
 for sn in sorted_nodes:
-  ranks += str(sn) + '\t' + str(node_scores[sn][1]) + '\n'
+  url = (
+    "https://api.etherscan.io/api?module=contract&action=getsourcecode&address=" + 
+    str(sn) + 
+    "&apikey=" + 
+    env.ETHERSCAN
+  )
+  res = requests.get(url).json()
+  name = ''
+  if res['status'] == '1':
+    name = res['result'][0]['ContractName']
+  if name == '':
+    name = 'Unverified or EOA'
+  print(str(sn) + '\t' + str(node_scores[sn][1]) + '\t' + name)
+  ranks += str(sn) + '\t' + str(node_scores[sn][1]) + '\t' + name + '\n'
 r.write(ranks)
