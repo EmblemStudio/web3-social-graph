@@ -31,8 +31,10 @@ for sn in sorted_nodes:
     "&apikey=" + 
     env.ETHERSCAN
   )
-  res = requests.get(url).json()
+  res = requests.get(url)
   name = ''
+  if res.status_code == 200:
+    res = res.json()
   if res['status'] == '1':
     name = res['result'][0]['ContractName']
   if name == '':

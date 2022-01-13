@@ -4,7 +4,7 @@ import env
 import json
 
 # run this script with the number of blocks you want: `python3 get_blocks.py 5`
-n = 100
+n = 1000
 if len(sys.argv) > 1:
   n = int(sys.argv[1])
 
@@ -31,6 +31,7 @@ while n >= 0:
       "id": 0
     }
   ).json()['result']
+  print('appending block', n)
   blocks.append(res)
   n -= 1
   block_number = hex(int(block_number, 16) - 1)
